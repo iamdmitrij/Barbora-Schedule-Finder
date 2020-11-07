@@ -34,3 +34,7 @@ mix run --no-halt
 docker build -t barbora:latest .
 docker run -e TELEGRAM_TOKEN=telegram_token barbora
 ```
+
+### Docker push
+docker tag barbora:latest iamdmitrij/barbora:latest
+docker push iamdmitrij/barbora
