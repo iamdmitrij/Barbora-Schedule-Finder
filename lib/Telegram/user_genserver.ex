@@ -66,8 +66,14 @@ defmodule Barbora.Telegram.UserGenServer do
     |> Barbora.Deliveries.filter_available_deliveries()
     |> Barbora.Telegram.User.notify_timeslots(state.chat_id)
 
+    poll_in_minutes =
+      case System.get_env("SCAN_INVERVAL_MINUTES") do
+        nil -> 60
+        value -> String.to_integer(value)
+      end
+
     timeout = case response do
-      {:ok, _} -> 5 * @scan_interval
+      {:ok, _} -> poll_in_minutes * @scan_interval
       _ -> @scan_interval
     end
 
